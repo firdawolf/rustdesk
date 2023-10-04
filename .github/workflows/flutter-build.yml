@@ -36,15 +36,17 @@ jobs:
   
 
   build-vcpkg-deps-linux:
+    runs-on: self-hosted 
     uses: ./.github/workflows/vcpkg-deps-linux.yml
 
   generate-bridge-linux:
+    runs-on: self-hosted 
     uses: ./.github/workflows/bridge.yml
     
   build-rustdesk-android:
     needs: [generate-bridge-linux]
     name: build rustdesk android apk ${{ matrix.job.target }} (${{ matrix.job.os }}) [${{ matrix.job.extra-build-features }}]
-    runs-on: ${{ matrix.job.os }}
+    runs-on: self-hosted 
     strategy:
       fail-fast: false
       matrix:
