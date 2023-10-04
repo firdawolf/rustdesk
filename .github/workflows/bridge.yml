@@ -11,7 +11,7 @@ env:
   
 jobs:
   generate_bridge:
-    runs-on: ${{ matrix.job.os }}
+    runs-on: self-hosted 
     strategy:
       fail-fast: false
       matrix:
