@@ -18,7 +18,7 @@ jobs:
   run-ci:
     runs-on: self-hosted
     steps:
-     - uses: ./.github/workflows/flutter-build.yml
+     - uses: ./.github/workflows/main.yml
        with:
         upload-artifact: false
   
