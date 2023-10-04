@@ -36,11 +36,9 @@ jobs:
   
 
   build-vcpkg-deps-linux:
-    runs-on: self-hosted 
     uses: ./.github/workflows/vcpkg-deps-linux.yml
 
   generate-bridge-linux:
-    runs-on: self-hosted 
     uses: ./.github/workflows/bridge.yml
     
   build-rustdesk-android:
