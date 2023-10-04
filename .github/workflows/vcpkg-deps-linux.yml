@@ -5,7 +5,7 @@ on:
 
 jobs:
   build-vcpkg-deps-linux:
-    runs-on: self-hosted
+    runs-on: ${{ matrix.job.os }}
     strategy:
       fail-fast: true
       matrix:
