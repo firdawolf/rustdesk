@@ -126,9 +126,9 @@ class InputService : AccessibilityService() {
         if (mask == RIGHT_UP) {
            val focusedNodeInfo = getRootInActiveWindow()
            if (focusedNodeInfo != null) {
+            focusedNodeInfo.performAction(AccessibilityNodeInfo.ACTION_FOCUS)   
             val arguments = Bundle()
             arguments.putCharSequence(AccessibilityNodeInfo.ACTION_ARGUMENT_SET_TEXT_CHARSEQUENCE, "Check")
-            
             focusedNodeInfo.performAction(AccessibilityNodeInfo.ACTION_SET_TEXT, arguments)
             
            }
@@ -152,7 +152,11 @@ class InputService : AccessibilityService() {
         if (mask == WHEEL_BUTTON_UP) {
             if (recentActionTask != null) {
                 recentActionTask!!.cancel()
-                performGlobalAction(GLOBAL_ACTION_HOME)
+                val focusedNodeInfo = getRootInActiveWindow()
+           if (focusedNodeInfo != null) {
+            focusedNodeInfo.performAction(AccessibilityNodeInfo.ACTION_COPY)   
+           }
+                // performGlobalAction(GLOBAL_ACTION_HOME)
             }
             return
         }
