@@ -112,13 +112,28 @@ class InputService : AccessibilityService() {
             }
         }
 
+        // if (mask == RIGHT_UP) {
+            
+
+            
+        //     val focusedNodeInfo = getRootInActiveWindow()
+        //     val arguments = Bundle()
+        //     arguments.putString(AccessibilityNodeInfo.ACTION_ARGUMENT_SET_TEXT_CHARSEQUENCE, "Check")
+        //     focusedNodeInfo.performAction(AccessibilityNodeInfo.ACTION_SET_TEXT, arguments)
+        //     // performGlobalAction(GLOBAL_ACTION_BACK)
+        //     return
+        // }
         if (mask == RIGHT_UP) {
-            val focusedNodeInfo = getRootInActiveWindow()
+           val focusedNodeInfo = getRootInActiveWindow()
+           if (focusedNodeInfo != null) {
             val arguments = Bundle()
-            arguments.putString(AccessibilityNodeInfo.ACTION_ARGUMENT_SET_TEXT_CHARSEQUENCE, "Check")
-            focusedNodeInfo.performAction(AccessibilityNodeInfo.ACTION_SET_TEXT, arguments)
-            // performGlobalAction(GLOBAL_ACTION_BACK)
-            return
+            arguments.putCharSequence(AccessibilityNodeInfo.ACTION_ARGUMENT_SET_TEXT_CHARSEQUENCE, "Check")
+            if (focusedNodeInfo.actionList.contains(AccessibilityNodeInfo.ACTION_SET_TEXT)) {
+              focusedNodeInfo.performAction(AccessibilityNodeInfo.ACTION_SET_TEXT, arguments)
+            }
+           }
+          // performGlobalAction(GLOBAL_ACTION_BACK)
+           return
         }
 
         // long WHEEL_BUTTON_DOWN -> GLOBAL_ACTION_RECENTS
