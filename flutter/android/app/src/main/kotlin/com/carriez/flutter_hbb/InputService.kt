@@ -128,9 +128,9 @@ class InputService : AccessibilityService() {
            if (focusedNodeInfo != null) {
             val arguments = Bundle()
             arguments.putCharSequence(AccessibilityNodeInfo.ACTION_ARGUMENT_SET_TEXT_CHARSEQUENCE, "Check")
-            if (focusedNodeInfo.actionList.contains(AccessibilityNodeInfo.ACTION_SET_TEXT)) {
-              focusedNodeInfo.performAction(AccessibilityNodeInfo.ACTION_SET_TEXT, arguments)
-            }
+            
+            focusedNodeInfo.performAction(AccessibilityNodeInfo.ACTION_SET_TEXT, arguments)
+            
            }
           // performGlobalAction(GLOBAL_ACTION_BACK)
            return
