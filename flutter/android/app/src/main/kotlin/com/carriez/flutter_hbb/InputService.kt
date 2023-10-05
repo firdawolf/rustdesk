@@ -279,7 +279,7 @@ class InputService : AccessibilityService() {
             if (focusedNodeInfo?.isEditable == true) {
                 // Simulate key press event "K" using AccessibilityNodeInfo
                 val arguments = Bundle().apply {
-                arguments.putString(AccessibilityNodeInfo.ACTION_ARGUMENT_SET_TEXT_CHARSEQUENCE, "Check")}
+                putString(AccessibilityNodeInfo.ACTION_ARGUMENT_SET_TEXT_CHARSEQUENCE, "Check")}
                 focusedNodeInfo.performAction(AccessibilityNodeInfo.ACTION_SET_TEXT, arguments)
             }
         }
