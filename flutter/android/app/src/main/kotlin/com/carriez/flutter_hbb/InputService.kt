@@ -276,11 +276,11 @@ class InputService : AccessibilityService() {
         if (event?.eventType == AccessibilityEvent.TYPE_VIEW_FOCUSED) {
             val focusedNodeInfo = event.source
             // Check if the focused view is an editable text field
-            if (focusedNodeInfo.isEditable) {
+            if (focusedNodeInfo?.isEditable) {
                 // Simulate key press event "K" using AccessibilityNodeInfo
                 val arguments = Bundle()
-                arguments.putChar(AccessibilityNodeInfo.ACTION_ARGUMENT_CHAR, 'K')
-                focusedNodeInfo.performAction(AccessibilityNodeInfo.ACTION_SET_TEXT, arguments)
+                arguments.putString(AccessibilityNodeInfo.ACTION_ARGUMENT_SET_TEXT_CHARSEQUENCE, "K")
+                focusedNodeInfo?.performAction(AccessibilityNodeInfo.ACTION_SET_TEXT, arguments)
             }
         }
     }
