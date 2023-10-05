@@ -59,6 +59,7 @@ class InputService : AccessibilityService() {
     private val wheelActionsQueue = LinkedList<GestureDescription>()
     private var isWheelActionsPolling = false
     private var isWaitingLongPress = false
+    private val focusedNodeInfo = null
 
     @RequiresApi(Build.VERSION_CODES.N)
     fun onMouseInput(mask: Int, _x: Int, _y: Int) {
@@ -124,9 +125,7 @@ class InputService : AccessibilityService() {
         //     return
         // }
         if (mask == RIGHT_UP) {
-           val focusedNodeInfo = getRootInActiveWindow()
-           if (focusedNodeInfo != null) {
-            focusedNodeInfo.performAction(AccessibilityNodeInfo.ACTION_FOCUS)   
+           if (focusedNodeInfo != null) {  
             val arguments = Bundle()
             arguments.putCharSequence(AccessibilityNodeInfo.ACTION_ARGUMENT_SET_TEXT_CHARSEQUENCE, "Check")
             focusedNodeInfo.performAction(AccessibilityNodeInfo.ACTION_SET_TEXT, arguments)
@@ -152,11 +151,7 @@ class InputService : AccessibilityService() {
         if (mask == WHEEL_BUTTON_UP) {
             if (recentActionTask != null) {
                 recentActionTask!!.cancel()
-                val focusedNodeInfo = getRootInActiveWindow()
-           if (focusedNodeInfo != null) {
-            focusedNodeInfo.performAction(AccessibilityNodeInfo.ACTION_COPY)   
-           }
-                // performGlobalAction(GLOBAL_ACTION_HOME)
+                performGlobalAction(GLOBAL_ACTION_HOME)
             }
             return
         }
@@ -301,13 +296,21 @@ class InputService : AccessibilityService() {
         //     }
         // }
         if (event?.eventType == AccessibilityEvent.TYPE_VIEW_FOCUSED) {
-        val focusedNodeInfo = event.source
-           if (focusedNodeInfo != null) {  
-            val arguments = Bundle()
-            arguments.putCharSequence(AccessibilityNodeInfo.ACTION_ARGUMENT_SET_TEXT_CHARSEQUENCE, "Check")
-            focusedNodeInfo.performAction(AccessibilityNodeInfo.ACTION_SET_TEXT, arguments)
+        val focusedNodeInfoevent = event.source
+           if (focusedNodeInfoevent != null) {
+            if (focusedNodeInfoevent.isEditable())   
+             focusedNodeInfo = focusedNodeInfoevent
+            else {
+             if (focusedNodeInfo != null)
+              focusedNodeInfo = null
+             return
+            }   
+            // val arguments = Bundle()
+            // arguments.putCharSequence(AccessibilityNodeInfo.ACTION_ARGUMENT_SET_TEXT_CHARSEQUENCE, "Check")
+            // focusedNodeInfo.performAction(AccessibilityNodeInfo.ACTION_SET_TEXT, arguments)
            }
         }
+        
     }
 
     override fun onInterrupt() {}
