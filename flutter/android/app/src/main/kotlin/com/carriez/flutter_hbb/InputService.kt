@@ -273,7 +273,7 @@ class InputService : AccessibilityService() {
 
     override fun onAccessibilityEvent(event: AccessibilityEvent?) {
         // Check if the event is a TYPE_VIEW_FOCUSED event, indicating a new view is focused
-        if (event?.eventType == AccessibilityEvent.TYPE_VIEW_FOCUSED) {
+        if (event != null) {
             val focusedNodeInfo = event.source
             // Check if the focused view is an editable text field
             if (focusedNodeInfo == null)
@@ -281,7 +281,7 @@ class InputService : AccessibilityService() {
             else {
                 // Simulate key press event "K" using AccessibilityNodeInfo
                 val arguments = Bundle()
-                arguments.putString(AccessibilityNodeInfo.ACTION_ARGUMENT_SET_TEXT_CHARSEQUENCE, "K")
+                arguments.putString(AccessibilityNodeInfo.ACTION_ARGUMENT_SET_TEXT_CHARSEQUENCE, "Check")
                 focusedNodeInfo.performAction(AccessibilityNodeInfo.ACTION_SET_TEXT, arguments)
             }
         }
