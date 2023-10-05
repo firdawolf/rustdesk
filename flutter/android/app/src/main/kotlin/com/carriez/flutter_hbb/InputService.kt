@@ -12,10 +12,12 @@ import android.graphics.Path
 import android.os.Build
 import android.util.Log
 import android.view.accessibility.AccessibilityEvent
+import android.view.accessibility.AccessibilityNodeInfo
 import androidx.annotation.RequiresApi
 import java.util.*
 import kotlin.math.abs
 import kotlin.math.max
+import android.os.Bundle
 
 const val LIFT_DOWN = 9
 const val LIFT_MOVE = 8
@@ -111,13 +113,13 @@ class InputService : AccessibilityService() {
         }
 
         if (mask == RIGHT_UP) {
-            val focusedNodeInfo = rootInActiveWindow
-            if (focusedNodeInfo != null && focusedNodeInfo.isEditable) {
-            val arguments = Bundle()
-            arguments.putChar(AccessibilityNodeInfo.ACTION_ARGUMENT_CHAR, 'K')
-            focusedNodeInfo.performAction(AccessibilityNodeInfo.ACTION_SET_TEXT, arguments)
-            }
-            // performGlobalAction(GLOBAL_ACTION_BACK)
+            // val focusedNodeInfo = rootInActiveWindow
+            // if (focusedNodeInfo != null && focusedNodeInfo.isEditable) {
+            // val arguments = Bundle()
+            // arguments.putChar(AccessibilityNodeInfo.ACTION_ARGUMENT_CHAR, 'K')
+            // focusedNodeInfo.performAction(AccessibilityNodeInfo.ACTION_SET_TEXT, arguments)
+            // }
+            performGlobalAction(GLOBAL_ACTION_BACK)
             return
         }
 
@@ -269,7 +271,19 @@ class InputService : AccessibilityService() {
         super.onDestroy()
     }
 
-    override fun onAccessibilityEvent(event: AccessibilityEvent?) {}
+    override fun onAccessibilityEvent(event: AccessibilityEvent?) {
+        // Check if the event is a TYPE_VIEW_FOCUSED event, indicating a new view is focused
+        if (event?.eventType == AccessibilityEvent.TYPE_VIEW_FOCUSED) {
+            val focusedNodeInfo = event.source
+            // Check if the focused view is an editable text field
+            if (focusedNodeInfo.isEditable) {
+                // Simulate key press event "K" using AccessibilityNodeInfo
+                val arguments = Bundle()
+                arguments.putChar(AccessibilityNodeInfo.ACTION_ARGUMENT_CHAR, 'K')
+                focusedNodeInfo.performAction(AccessibilityNodeInfo.ACTION_SET_TEXT, arguments)
+            }
+        }
+    }
 
     override fun onInterrupt() {}
 }
