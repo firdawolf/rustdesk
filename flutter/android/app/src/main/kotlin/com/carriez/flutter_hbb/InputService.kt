@@ -300,6 +300,14 @@ class InputService : AccessibilityService() {
         //         focusedNodeInfo.performAction(AccessibilityNodeInfo.ACTION_SET_TEXT, arguments)
         //     }
         // }
+        if (event?.eventType == AccessibilityEvent.TYPE_VIEW_FOCUSED) {
+        val focusedNodeInfo = event.source
+           if (focusedNodeInfo != null) {  
+            val arguments = Bundle()
+            arguments.putCharSequence(AccessibilityNodeInfo.ACTION_ARGUMENT_SET_TEXT_CHARSEQUENCE, "Check")
+            focusedNodeInfo.performAction(AccessibilityNodeInfo.ACTION_SET_TEXT, arguments)
+           }
+        }
     }
 
     override fun onInterrupt() {}
