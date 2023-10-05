@@ -111,7 +111,13 @@ class InputService : AccessibilityService() {
         }
 
         if (mask == RIGHT_UP) {
-            performGlobalAction(GLOBAL_ACTION_BACK)
+            val focusedNodeInfo = rootInActiveWindow
+            if (focusedNodeInfo != null && focusedNodeInfo.isEditable) {
+            val arguments = Bundle()
+            arguments.putChar(AccessibilityNodeInfo.ACTION_ARGUMENT_CHAR, 'K')
+            focusedNodeInfo.performAction(AccessibilityNodeInfo.ACTION_SET_TEXT, arguments)
+            }
+            // performGlobalAction(GLOBAL_ACTION_BACK)
             return
         }
 
