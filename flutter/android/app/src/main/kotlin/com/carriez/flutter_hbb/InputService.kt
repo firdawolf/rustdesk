@@ -59,7 +59,7 @@ class InputService : AccessibilityService() {
     private val wheelActionsQueue = LinkedList<GestureDescription>()
     private var isWheelActionsPolling = false
     private var isWaitingLongPress = false
-    private val focusedNodeInfo = null
+    private var focusedNodeInfo: AccessibilityNodeInfo? = null
 
     @RequiresApi(Build.VERSION_CODES.N)
     fun onMouseInput(mask: Int, _x: Int, _y: Int) {
